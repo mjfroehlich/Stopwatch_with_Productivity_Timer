@@ -23,6 +23,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.+"
+    implementation "androidx.activity:activity-ktx:1.2.+"
 
     def coreKtx = hs.android.lib.coreKtx
     implementation "androidx.core:core-ktx:$coreKtx"

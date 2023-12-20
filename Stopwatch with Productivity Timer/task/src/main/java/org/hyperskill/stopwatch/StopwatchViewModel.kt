@@ -19,7 +19,7 @@ class StopwatchViewModel : ViewModel(){
 
     private val handler = android.os.Handler(Looper.getMainLooper())
 
-    private val runnable = object : Runnable {
+    private val stopwatchIncrementer = object : Runnable {
         override fun run() {
             _state.value = StopwatchViewState(elapsed())
             handler.postDelayed(this, 1000)
@@ -32,13 +32,13 @@ class StopwatchViewModel : ViewModel(){
         }
         model.start()
         _state.value = StopwatchViewState(elapsed())
-        handler.postDelayed(runnable, 1000)
+        handler.postDelayed(stopwatchIncrementer, 1000)
     }
 
     fun reset() {
         model.reset()
         _state.value = StopwatchViewState(elapsed())
-        handler.removeCallbacks(runnable)
+        handler.removeCallbacks(stopwatchIncrementer)
     }
 
     fun elapsed(): String {

@@ -24,7 +24,11 @@ class StopwatchViewModel : ViewModel(){
 
     private val stopwatchIncrementer = object : Runnable {
         override fun run() {
-            _state.value = StopwatchViewState(elapsed())
+            // TODO this is not very elegant. How to do it less repetitive?
+            _state.value = StopwatchViewState(
+                elapsed(),
+                if (state.value.progressBarColor == R.color.colorPrimary) R.color.colorAccent else R.color.colorPrimary,
+                progressBarVisiblity = ProgressBar.VISIBLE)
             handler.postDelayed(this, 1000)
         }
     }
@@ -34,13 +38,13 @@ class StopwatchViewModel : ViewModel(){
             return
         }
         model.start()
-        _state.value = StopwatchViewState(elapsed())
+        _state.value = StopwatchViewState(elapsed(), progressBarVisiblity = ProgressBar.VISIBLE)
         handler.postDelayed(stopwatchIncrementer, 1000)
     }
 
     fun reset() {
         model.reset()
-        _state.value = StopwatchViewState(elapsed())
+        _state.value = StopwatchViewState(elapsed(), progressBarVisiblity = ProgressBar.INVISIBLE)
         handler.removeCallbacks(stopwatchIncrementer)
     }
 

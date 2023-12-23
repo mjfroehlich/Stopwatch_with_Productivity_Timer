@@ -1,8 +1,8 @@
 package org.hyperskill.stopwatch
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
@@ -13,10 +13,12 @@ class MainActivity : AppCompatActivity() {
     private val startButton: Button by lazy {  findViewById(R.id.startButton) }
     private val resetButton: Button by lazy { findViewById(R.id.resetButton) }
     private val textView: TextView by lazy { findViewById(R.id.textView) }
+    private val progressBar: ProgressBar by lazy { findViewById(R.id.progressBar) }
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        progressBar.visibility = ProgressBar.INVISIBLE
 
         val vm: StopwatchViewModel by viewModels()
         startButton.setOnClickListener {
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             vm.state.collect {
                 textView.text = it.elapsed
+                progressBar.visibility = it.progressBarVisiblity
             }
         }
     }

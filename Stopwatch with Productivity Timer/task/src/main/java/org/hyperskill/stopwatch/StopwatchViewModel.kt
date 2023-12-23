@@ -1,13 +1,16 @@
 package org.hyperskill.stopwatch
 
 import android.os.Looper
+import android.widget.ProgressBar
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class StopwatchViewState(
-    val elapsed: String = "00:00"
+    val elapsed: String = "00:00",
+    val progressBarColor: Int = R.color.colorPrimary,
+    val progressBarVisiblity: Int = ProgressBar.INVISIBLE
 )
 
 class StopwatchViewModel : ViewModel(){

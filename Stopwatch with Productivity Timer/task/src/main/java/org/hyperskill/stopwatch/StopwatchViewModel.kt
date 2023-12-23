@@ -16,7 +16,9 @@ data class StopwatchViewState(
 class StopwatchViewModel : ViewModel(){
     // TODO without specifying `elapsed` in the constructor call, I get a NullPointerException. Why, as it
     //  has a default value set in its default constructor??
-    private val _state = MutableStateFlow(StopwatchViewState("00:00"))
+    private val _state = MutableStateFlow(StopwatchViewState(
+        "00:00", R.color.colorPrimary, ProgressBar.INVISIBLE
+    ))
     val state: StateFlow<StopwatchViewState> = _state.asStateFlow()
     val model = StopwatchModel()
 
@@ -27,7 +29,7 @@ class StopwatchViewModel : ViewModel(){
             // TODO this is not very elegant. How to do it less repetitive?
             _state.value = StopwatchViewState(
                 elapsed(),
-                if (state.value.progressBarColor == R.color.colorPrimary) R.color.colorAccent else R.color.colorPrimary,
+                if (model.elapsed().second % 2 == 0L) R.color.colorPrimary else R.color.colorAccent,
                 progressBarVisiblity = ProgressBar.VISIBLE)
             handler.postDelayed(this, 1000)
         }
@@ -38,13 +40,13 @@ class StopwatchViewModel : ViewModel(){
             return
         }
         model.start()
-        _state.value = StopwatchViewState(elapsed(), progressBarVisiblity = ProgressBar.VISIBLE)
+        _state.value = StopwatchViewState(elapsed(), R.color.colorPrimary, ProgressBar.VISIBLE)
         handler.postDelayed(stopwatchIncrementer, 1000)
     }
 
     fun reset() {
         model.reset()
-        _state.value = StopwatchViewState(elapsed(), progressBarVisiblity = ProgressBar.INVISIBLE)
+        _state.value = StopwatchViewState(elapsed(), R.color.colorPrimary, ProgressBar.INVISIBLE)
         handler.removeCallbacks(stopwatchIncrementer)
     }
 

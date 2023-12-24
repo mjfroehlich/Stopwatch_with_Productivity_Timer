@@ -11,14 +11,14 @@ data class StopwatchViewState(
     val elapsed: String = "00:00",
     val progressBarColor: Int = R.color.colorPrimary,
     val progressBarVisiblity: Int = ProgressBar.INVISIBLE
-)
+) {
+    // TODO not sure why this is needed - the tests fail without it.
+    // https://github.com/mjfroehlich/Stopwatch_with_Productivity_Timer/issues/1
+    constructor(): this("00:00", R.color.colorPrimary, ProgressBar.INVISIBLE)
+}
 
 class StopwatchViewModel : ViewModel(){
-    // TODO without specifying `elapsed` in the constructor call, I get a NullPointerException. Why, as it
-    //  has a default value set in its default constructor??
-    private val _state = MutableStateFlow(StopwatchViewState(
-        "00:00", R.color.colorPrimary, ProgressBar.INVISIBLE
-    ))
+    private val _state = MutableStateFlow(StopwatchViewState())
     val state: StateFlow<StopwatchViewState> = _state.asStateFlow()
     val model = StopwatchModel()
 

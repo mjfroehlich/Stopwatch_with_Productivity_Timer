@@ -16,9 +16,7 @@ data class StopwatchViewState(
 class StopwatchViewModel : ViewModel(){
     // TODO without specifying `elapsed` in the constructor call, I get a NullPointerException. Why, as it
     //  has a default value set in its default constructor??
-    private val _state = MutableStateFlow(StopwatchViewState(
-        "00:00", R.color.colorPrimary, ProgressBar.INVISIBLE
-    ))
+    private val _state = MutableStateFlow(StopwatchViewState())
     val state: StateFlow<StopwatchViewState> = _state.asStateFlow()
     val model = StopwatchModel()
 
